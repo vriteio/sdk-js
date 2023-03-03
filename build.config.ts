@@ -1,7 +1,7 @@
 import { defineBuildConfig } from "unbuild";
 
 export default defineBuildConfig({
-  entries: ["./src/api/index"],
+  entries: [{ input: "./src/api" }, { input: "./src/transformers" }],
   declaration: true,
   clean: true,
   failOnWarn: false,

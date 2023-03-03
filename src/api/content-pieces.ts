@@ -78,9 +78,11 @@ const createContentPiecesEndpoints = (sendRequest: SendRequestFunction) => {
     list: <CustomData extends Record<string, any> = Record<string, any>>(
       query: PaginationParams & { contentGroupId?: string; tagId?: string }
     ) => {
-      return sendRequest<{
-        contentPiece: ContentPiece<CustomData>;
-      }>("GET", "/content-pieces/list", { params: query });
+      return sendRequest<Array<ContentPiece<CustomData>>>(
+        "GET",
+        "/content-pieces/list",
+        { params: query }
+      );
     },
     create: <CustomData extends Record<string, any> = Record<string, any>>(
       input: Omit<Partial<ContentPiece<CustomData>>, "id"> &

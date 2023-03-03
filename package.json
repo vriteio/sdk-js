@@ -1,25 +1,42 @@
 {
   "name": "@vrite/sdk",
-  "version": "0.0.1-beta",
+  "version": "0.0.4-beta",
   "private": false,
   "description": "",
   "keywords": [],
   "author": "",
   "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+  "scripts": {
+    "build": "unbuild"
+  },
+  "typesVersions": {
+    "*": {
+      "api": [
+        "./dist/api.d.ts"
+      ],
+      "transformers": [
+        "./dist/transformers.d.ts"
+      ]
     }
   },
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    "./api": {
+      "import": "./dist/api.mjs",
+      "require": "./dist/api.cjs"
+    },
+    "./transformers": {
+      "import": "./dist/transformers.mjs",
+      "require": "./dist/transformers.cjs"
+    }
+  },
+  "main": "./dist/api.cjs",
+  "types": "./dist/api.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "isomorphic-unfetch": "^4.0.2"
+    "isomorphic-unfetch": "^3.1.0"
   },
   "devDependencies": {
     "unbuild": "^1.1.2"
