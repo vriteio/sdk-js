@@ -22,6 +22,10 @@ interface ContentPiece<
    */
   title: string;
   /**
+   * Slug generated from the title
+   */
+  slug: string;
+  /**
    * HTML-formatted description
    */
   description?: string;
@@ -55,7 +59,7 @@ interface ContentPiece<
   content: ContentType extends undefined
     ? undefined
     : ContentType extends "json"
-    ? JSONContent | Record<string, never>
+    ? JSONContent
     : string;
   /**
    * Content piece ID
@@ -69,14 +73,18 @@ const createContentPiecesEndpoints = (sendRequest: SendRequestFunction) => {
       CustomData extends Record<string, any> = Record<string, any>,
       ContentType extends "html" | "json" | undefined = undefined
     >(
-      query: Pick<ContentPiece, "id"> & { content: ContentType }
+      query: Pick<ContentPiece, "id"> & { content?: ContentType }
     ) => {
       return sendRequest<{
         contentPiece: ContentPiece<CustomData, ContentType>;
       }>("GET", "/content-pieces", { params: query });
     },
     list: <CustomData extends Record<string, any> = Record<string, any>>(
-      query: PaginationParams & { contentGroupId?: string; tagId?: string }
+      query: PaginationParams & {
+        contentGroupId?: string;
+        tagId?: string;
+        slug?: string;
+      }
     ) => {
       return sendRequest<Array<ContentPiece<CustomData>>>(
         "GET",

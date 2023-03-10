@@ -1,0 +1,33 @@
+---
+import { client } from "virtual:vrite";
+import type { Client, ContentPiece } from "../api";
+import Node from "./node.astro";
+
+interface Props {
+  contentPieceId?: string;
+  slug?: string;
+}
+
+let contentPiece: ContentPiece<Record<string, any>, "json"> | null = null;
+let contentPieceId = Astro.props.contentPieceId;
+
+if (!contentPieceId && Astro.props.slug) {
+  const contentPieces = await (client as Client).contentPieces.list({
+    slug: Astro.props.slug,
+  });
+  if (contentPieces[0]) {
+    contentPieceId = contentPieces[0].id;
+  }
+}
+
+if (contentPieceId) {
+  contentPiece = (
+    await (client as Client).contentPieces.get({
+      id: contentPieceId,
+      content: "json",
+    })
+  ).contentPiece;
+}
+---
+
+{contentPiece && <Node {...contentPiece.content} />}

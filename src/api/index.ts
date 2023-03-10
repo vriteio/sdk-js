@@ -1,4 +1,5 @@
 export { createClient } from "./client";
+export type { Client } from "./client";
 export type { ContentGroup } from "./content-groups";
 export type {
   ContentPiece,

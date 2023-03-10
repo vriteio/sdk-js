@@ -14,7 +14,7 @@ const createContentTransformer = (config: ContentTransformerConfig) => {
     return content
       .map((doc) => {
         if (doc.type === "text") {
-          let content = doc.text || "";
+          let content = doc?.text || "";
 
           doc.marks?.forEach((mark) => {
             content = config.applyInlineFormatting(

@@ -7,10 +7,11 @@ import { createTagsEndpoints } from "./tags";
 
 interface ClientConfig {
   token: string;
+  baseURL?: string;
 }
 
 const createClient = (config: ClientConfig) => {
-  const baseURL = "https://api.vrite.io";
+  const baseURL = config.baseURL || "https://api.vrite.io";
   const sendRequest = createSendRequestFunction(baseURL, config.token);
 
   return {
@@ -21,4 +22,7 @@ const createClient = (config: ClientConfig) => {
   };
 };
 
+type Client = ReturnType<typeof createClient>;
+
 export { createClient };
+export type { Client };
